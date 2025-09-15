@@ -18,7 +18,7 @@ namespace Nomina
         public Form1()
         {
             InitializeComponent();
-            columnas =new List<string>();
+            columnas = new List<string>();
             columnas.Add("EE");
             columnas.Add("Nombre");
             columnas.Add("Apellido");
@@ -26,7 +26,7 @@ namespace Nomina
             columnas.Add("OT. Hrs.");
             columnas.Add("D Hrs.");
         }
-        
+
         private void importarExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ofdExcel.ShowDialog() == DialogResult.OK)
@@ -75,19 +75,26 @@ namespace Nomina
                 for (int i = 3; i < rowCount; i++)
                 {
                     DataRow row = dt.NewRow();
-                    for (int j = 1; j < dt.Columns.Count; j++)
-                    {
-                        row[j-1] = worksheet.Cells[i, j ].Text;
-                        if (j == 2) { 
-                            string[] partes=SepararNombre(worksheet.Cells[i, j].Text);
-                        }
-                    }
+
+                    string ee = worksheet.Cells[i, 1].Text;
+
+                    string nombreCompleto = worksheet.Cells[i, 2].Text;
+                    string[] partes = SepararNombre(nombreCompleto);
+
+                    string apellido = partes[0];
+                    string nombre = partes.Length >= 2 ? partes[1].Trim() : "";
+
+                    string rgH = worksheet.Cells[i, 3].Text;
+                    string otH = worksheet.Cells[i, 4].Text;
+                    string dH = worksheet.Cells[i, 5].Text;
+
                     dt.Rows.Add(row);
+
+                    dgvInformacion.Rows.Add(ee, nombre, apellido, rgH, otH, dH);
                 }
-
-
             }
         }
+    
 
         private string [] SepararNombre(string nombreCompleto)
         { 
