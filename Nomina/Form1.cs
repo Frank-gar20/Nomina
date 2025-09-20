@@ -76,6 +76,15 @@ namespace Nomina
                 // Leer las filas de datos
                 int rowCount = worksheet.Dimension.End.Row;
                 dgvInformacion.Rows.Clear(); //limpiar antes de mostrar
+                
+                //traemos las tarifas a la pantalla principal
+                decimal rgTarifa, otTarifa, dtTarifa;
+                string json = File.ReadAllText(ruta);
+                Datos datos = JsonConvert.DeserializeObject<Datos>(json);
+                rgTarifa = decimal.Parse(datos.Campo1);
+                otTarifa = decimal.Parse(datos.Campo2);
+                dtTarifa = decimal.Parse(datos.Campo3);
+
                 for (int i = 3; i < rowCount; i++)
                 {
                     String ee = worksheet.Cells[i, 2].Text;
@@ -95,28 +104,20 @@ namespace Nomina
                         string otH = worksheet.Cells[i, 4].Text;
                         string dH = worksheet.Cells[i, 5].Text;
 
+                        rgTarifa *= decimal.Parse(rgH);
+                        otTarifa *= decimal.Parse(otH);
+                        dtTarifa *= decimal.Parse(dH);
+
                         dt.Rows.Add(row);
-
-                        dgvInformacion.Rows.Add(ee, nombre, apellido, rgH, otH, dH); //ponemos los datos en el DGV
-
-                        if (File.Exists(ruta))
-                        {
-                            string json = File.ReadAllText(ruta);
-                            Datos datos = JsonConvert.DeserializeObject<Datos>(json);
-                            int rgTarifa, otTarifa, dtTarifa;
-                            rgTarifa = int.Parse(datos.Campo1);
-                            otTarifa = int.Parse(datos.Campo2);
-                            dtTarifa = int.Parse(datos.Campo3);
-                        }
+                        //ponemos los datos en el DGV
+                        dgvInformacion.Rows.Add(ee, nombre, apellido, rgH, otH, dH, rgTarifa.ToString(), otTarifa.ToString(), dtTarifa.ToString());
                     }
-                    else
-                    {
-                        return;
-                    }
+                    rgTarifa = decimal.Parse(datos.Campo1);
+                    otTarifa = decimal.Parse(datos.Campo2);
+                    dtTarifa = decimal.Parse(datos.Campo3);
                 }
             }
         }
-    
 
         private string [] SepararNombre(string nombreCompleto)
         { 
