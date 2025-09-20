@@ -72,25 +72,35 @@ namespace Nomina
 
                 // Leer las filas de datos
                 int rowCount = worksheet.Dimension.End.Row;
+                dgvInformacion.Rows.Clear(); //limpiar antes de mostrar
                 for (int i = 3; i < rowCount; i++)
                 {
-                    DataRow row = dt.NewRow();
+                    String ee = worksheet.Cells[i, 2].Text;
+                    if (!String.IsNullOrWhiteSpace(ee))
+                    {
+                        DataRow row = dt.NewRow();
 
-                    string ee = worksheet.Cells[i, 1].Text;
+                        ee = worksheet.Cells[i, 1].Text;
 
-                    string nombreCompleto = worksheet.Cells[i, 2].Text;
-                    string[] partes = SepararNombre(nombreCompleto);
+                        string nombreCompleto = worksheet.Cells[i, 2].Text;
+                        string[] partes = SepararNombre(nombreCompleto);
 
-                    string apellido = partes[0];
-                    string nombre = partes.Length >= 2 ? partes[1].Trim() : "";
+                        string apellido = partes[0];
+                        string nombre = partes.Length >= 2 ? partes[1] : "";
 
-                    string rgH = worksheet.Cells[i, 3].Text;
-                    string otH = worksheet.Cells[i, 4].Text;
-                    string dH = worksheet.Cells[i, 5].Text;
+                        string rgH = worksheet.Cells[i, 3].Text;
+                        string otH = worksheet.Cells[i, 4].Text;
+                        string dH = worksheet.Cells[i, 5].Text;
 
-                    dt.Rows.Add(row);
+                        dt.Rows.Add(row);
 
-                    dgvInformacion.Rows.Add(ee, nombre, apellido, rgH, otH, dH);
+                        dgvInformacion.Rows.Add(ee, nombre, apellido, rgH, otH, dH); //ponemos los datos en el DGV
+
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -107,6 +117,12 @@ namespace Nomina
                 partes[1] = nombre.Trim();               
             }
             return partes;
+        }
+
+        private void tarifaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FRMtarifa fRMtarifa = new FRMtarifa();
+            fRMtarifa.Show();
         }
     }
 }

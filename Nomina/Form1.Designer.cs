@@ -34,18 +34,22 @@
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.operacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importarExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tarifaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvInformacion = new System.Windows.Forms.DataGridView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.ttsHora = new System.Windows.Forms.ToolStripStatusLabel();
             this.ofdExcel = new System.Windows.Forms.OpenFileDialog();
+            this.tmrReloj = new System.Windows.Forms.Timer(this.components);
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tmrReloj = new System.Windows.Forms.Timer(this.components);
-            this.ttsHora = new System.Windows.Forms.ToolStripStatusLabel();
+            this.RGTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OTTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DTTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuPrincipal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -57,14 +61,14 @@
             // 
             // menuPrincipal
             // 
-            this.menuPrincipal.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuPrincipal.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
             this.operacionesToolStripMenuItem});
             this.menuPrincipal.Location = new System.Drawing.Point(0, 0);
             this.menuPrincipal.Name = "menuPrincipal";
-            this.menuPrincipal.Size = new System.Drawing.Size(1170, 33);
+            this.menuPrincipal.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
+            this.menuPrincipal.Size = new System.Drawing.Size(927, 24);
             this.menuPrincipal.TabIndex = 0;
             this.menuPrincipal.Text = "menuStrip1";
             // 
@@ -73,35 +77,44 @@
             this.archivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.salirToolStripMenuItem});
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
-            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(88, 29);
+            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.archivoToolStripMenuItem.Text = "Archivo";
             // 
             // salirToolStripMenuItem
             // 
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
             // 
             // operacionesToolStripMenuItem
             // 
             this.operacionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importarExcelToolStripMenuItem});
+            this.importarExcelToolStripMenuItem,
+            this.tarifaToolStripMenuItem});
             this.operacionesToolStripMenuItem.Name = "operacionesToolStripMenuItem";
-            this.operacionesToolStripMenuItem.Size = new System.Drawing.Size(127, 29);
+            this.operacionesToolStripMenuItem.Size = new System.Drawing.Size(85, 22);
             this.operacionesToolStripMenuItem.Text = "Operaciones";
             // 
             // importarExcelToolStripMenuItem
             // 
             this.importarExcelToolStripMenuItem.Name = "importarExcelToolStripMenuItem";
-            this.importarExcelToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.importarExcelToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.importarExcelToolStripMenuItem.Text = "Importar Excel";
             this.importarExcelToolStripMenuItem.Click += new System.EventHandler(this.importarExcelToolStripMenuItem_Click);
+            // 
+            // tarifaToolStripMenuItem
+            // 
+            this.tarifaToolStripMenuItem.Name = "tarifaToolStripMenuItem";
+            this.tarifaToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.tarifaToolStripMenuItem.Text = "Tarifa";
+            this.tarifaToolStripMenuItem.Click += new System.EventHandler(this.tarifaToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 33);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -112,8 +125,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
-            this.splitContainer1.Size = new System.Drawing.Size(1170, 533);
-            this.splitContainer1.SplitterDistance = 387;
+            this.splitContainer1.Size = new System.Drawing.Size(927, 344);
+            this.splitContainer1.SplitterDistance = 247;
+            this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 1;
             // 
             // dgvInformacion
@@ -127,14 +141,18 @@
             this.Column3,
             this.Column4,
             this.Column5,
-            this.Column6});
+            this.Column6,
+            this.RGTotal,
+            this.OTTotal,
+            this.DTTotal});
             this.dgvInformacion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvInformacion.Location = new System.Drawing.Point(0, 0);
+            this.dgvInformacion.Margin = new System.Windows.Forms.Padding(2);
             this.dgvInformacion.Name = "dgvInformacion";
             this.dgvInformacion.ReadOnly = true;
             this.dgvInformacion.RowHeadersWidth = 62;
             this.dgvInformacion.RowTemplate.Height = 28;
-            this.dgvInformacion.Size = new System.Drawing.Size(1170, 387);
+            this.dgvInformacion.Size = new System.Drawing.Size(927, 247);
             this.dgvInformacion.TabIndex = 2;
             // 
             // statusStrip1
@@ -142,15 +160,27 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ttsHora});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 120);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 72);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1170, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(927, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // ttsHora
+            // 
+            this.ttsHora.Name = "ttsHora";
+            this.ttsHora.Size = new System.Drawing.Size(0, 17);
             // 
             // ofdExcel
             // 
             this.ofdExcel.Filter = "Archivo de Excel|*.xlsx";
+            // 
+            // tmrReloj
+            // 
+            this.tmrReloj.Enabled = true;
+            this.tmrReloj.Interval = 1000;
+            this.tmrReloj.Tick += new System.EventHandler(this.tmrReloj_Tick);
             // 
             // Column1
             // 
@@ -166,7 +196,7 @@
             this.Column2.MinimumWidth = 8;
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
-            this.Column2.Width = 200;
+            this.Column2.Width = 150;
             // 
             // Column3
             // 
@@ -174,7 +204,7 @@
             this.Column3.MinimumWidth = 8;
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
-            this.Column3.Width = 200;
+            this.Column3.Width = 150;
             // 
             // Column4
             // 
@@ -200,25 +230,36 @@
             this.Column6.ReadOnly = true;
             this.Column6.Width = 50;
             // 
-            // tmrReloj
+            // RGTotal
             // 
-            this.tmrReloj.Enabled = true;
-            this.tmrReloj.Interval = 1000;
-            this.tmrReloj.Tick += new System.EventHandler(this.tmrReloj_Tick);
+            this.RGTotal.HeaderText = "RG Total";
+            this.RGTotal.Name = "RGTotal";
+            this.RGTotal.ReadOnly = true;
+            this.RGTotal.Width = 70;
             // 
-            // ttsHora
+            // OTTotal
             // 
-            this.ttsHora.Name = "ttsHora";
-            this.ttsHora.Size = new System.Drawing.Size(0, 15);
+            this.OTTotal.HeaderText = "Ot Total";
+            this.OTTotal.Name = "OTTotal";
+            this.OTTotal.ReadOnly = true;
+            this.OTTotal.Width = 70;
+            // 
+            // DTTotal
+            // 
+            this.DTTotal.HeaderText = "Dt Total";
+            this.DTTotal.Name = "DTTotal";
+            this.DTTotal.ReadOnly = true;
+            this.DTTotal.Width = 70;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1170, 566);
+            this.ClientSize = new System.Drawing.Size(927, 368);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuPrincipal);
             this.MainMenuStrip = this.menuPrincipal;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Procesamiento de Nomina";
             this.menuPrincipal.ResumeLayout(false);
@@ -247,14 +288,18 @@
         private System.Windows.Forms.DataGridView dgvInformacion;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.OpenFileDialog ofdExcel;
+        private System.Windows.Forms.ToolStripStatusLabel ttsHora;
+        private System.Windows.Forms.Timer tmrReloj;
+        private System.Windows.Forms.ToolStripMenuItem tarifaToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.ToolStripStatusLabel ttsHora;
-        private System.Windows.Forms.Timer tmrReloj;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RGTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OTTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DTTotal;
     }
 }
 
