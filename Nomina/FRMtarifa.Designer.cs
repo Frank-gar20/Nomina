@@ -34,6 +34,8 @@
             this.txtRG = new System.Windows.Forms.TextBox();
             this.txtOT = new System.Windows.Forms.TextBox();
             this.txtDT = new System.Windows.Forms.TextBox();
+            this.BTNguardar = new System.Windows.Forms.Button();
+            this.BTNcancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -84,11 +86,33 @@
             this.txtDT.Size = new System.Drawing.Size(100, 20);
             this.txtDT.TabIndex = 5;
             // 
+            // BTNguardar
+            // 
+            this.BTNguardar.Location = new System.Drawing.Point(333, 64);
+            this.BTNguardar.Name = "BTNguardar";
+            this.BTNguardar.Size = new System.Drawing.Size(75, 23);
+            this.BTNguardar.TabIndex = 6;
+            this.BTNguardar.Text = "Guardar";
+            this.BTNguardar.UseVisualStyleBackColor = true;
+            this.BTNguardar.Click += new System.EventHandler(this.BTNguardar_Click);
+            // 
+            // BTNcancelar
+            // 
+            this.BTNcancelar.Location = new System.Drawing.Point(333, 114);
+            this.BTNcancelar.Name = "BTNcancelar";
+            this.BTNcancelar.Size = new System.Drawing.Size(75, 23);
+            this.BTNcancelar.TabIndex = 7;
+            this.BTNcancelar.Text = "Cancelar";
+            this.BTNcancelar.UseVisualStyleBackColor = true;
+            this.BTNcancelar.Click += new System.EventHandler(this.BTNcancelar_Click);
+            // 
             // FRMtarifa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(479, 273);
+            this.ClientSize = new System.Drawing.Size(479, 213);
+            this.Controls.Add(this.BTNcancelar);
+            this.Controls.Add(this.BTNguardar);
             this.Controls.Add(this.txtDT);
             this.Controls.Add(this.txtOT);
             this.Controls.Add(this.txtRG);
@@ -110,5 +134,7 @@
         private System.Windows.Forms.TextBox txtRG;
         private System.Windows.Forms.TextBox txtOT;
         private System.Windows.Forms.TextBox txtDT;
+        private System.Windows.Forms.Button BTNguardar;
+        private System.Windows.Forms.Button BTNcancelar;
     }
 }

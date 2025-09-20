@@ -1,13 +1,16 @@
-﻿using OfficeOpenXml;
+﻿using Newtonsoft.Json;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 
 namespace Nomina
@@ -15,6 +18,7 @@ namespace Nomina
     public partial class Form1 : Form
     {
         List<string> columnas;
+        public String ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ValoresTarifa.json");
         public Form1()
         {
             InitializeComponent();
@@ -34,7 +38,6 @@ namespace Nomina
                 string archivo = ofdExcel.FileName;
                 //MessageBox.Show("Archivo seleccionado: " + archivo);
                 CargarExcel(archivo);
-
             }
         }
 
@@ -96,6 +99,15 @@ namespace Nomina
 
                         dgvInformacion.Rows.Add(ee, nombre, apellido, rgH, otH, dH); //ponemos los datos en el DGV
 
+                        if (File.Exists(ruta))
+                        {
+                            string json = File.ReadAllText(ruta);
+                            Datos datos = JsonConvert.DeserializeObject<Datos>(json);
+                            int rgTarifa, otTarifa, dtTarifa;
+                            rgTarifa = int.Parse(datos.Campo1);
+                            otTarifa = int.Parse(datos.Campo2);
+                            dtTarifa = int.Parse(datos.Campo3);
+                        }
                     }
                     else
                     {
