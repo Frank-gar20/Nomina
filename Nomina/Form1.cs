@@ -33,6 +33,7 @@ namespace Nomina
 
         private void importarExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             if (ofdExcel.ShowDialog() == DialogResult.OK)
             {
                 string archivo = ofdExcel.FileName;
@@ -76,46 +77,56 @@ namespace Nomina
                 // Leer las filas de datos
                 int rowCount = worksheet.Dimension.End.Row;
                 dgvInformacion.Rows.Clear(); //limpiar antes de mostrar
-                
+
                 //traemos las tarifas a la pantalla principal
-                decimal rgTarifa, otTarifa, dtTarifa;
-                string json = File.ReadAllText(ruta);
-                Datos datos = JsonConvert.DeserializeObject<Datos>(json);
-                rgTarifa = decimal.Parse(datos.Campo1);
-                otTarifa = decimal.Parse(datos.Campo2);
-                dtTarifa = decimal.Parse(datos.Campo3);
-
-                for (int i = 3; i < rowCount; i++)
+                try
                 {
-                    String ee = worksheet.Cells[i, 2].Text;
-                    if (!String.IsNullOrWhiteSpace(ee))
-                    {
-                        DataRow row = dt.NewRow();
-
-                        ee = worksheet.Cells[i, 1].Text;
-
-                        string nombreCompleto = worksheet.Cells[i, 2].Text;
-                        string[] partes = SepararNombre(nombreCompleto);
-
-                        string apellido = partes[0];
-                        string nombre = partes.Length >= 2 ? partes[1] : "";
-
-                        string rgH = worksheet.Cells[i, 3].Text;
-                        string otH = worksheet.Cells[i, 4].Text;
-                        string dH = worksheet.Cells[i, 5].Text;
-
-                        rgTarifa *= decimal.Parse(rgH);
-                        otTarifa *= decimal.Parse(otH);
-                        dtTarifa *= decimal.Parse(dH);
-
-                        dt.Rows.Add(row);
-                        //ponemos los datos en el DGV
-                        dgvInformacion.Rows.Add(ee, nombre, apellido, rgH, otH, dH, rgTarifa.ToString(), otTarifa.ToString(), dtTarifa.ToString());
-                    }
+                    decimal rgTarifa, otTarifa, dtTarifa;
+                    string json = File.ReadAllText(ruta);
+                    Datos datos = JsonConvert.DeserializeObject<Datos>(json);
                     rgTarifa = decimal.Parse(datos.Campo1);
                     otTarifa = decimal.Parse(datos.Campo2);
                     dtTarifa = decimal.Parse(datos.Campo3);
+
+                    for (int i = 3; i < rowCount; i++)
+                    {
+                        String ee = worksheet.Cells[i, 2].Text;
+                        if (!String.IsNullOrWhiteSpace(ee))
+                        {
+                            DataRow row = dt.NewRow();
+
+                            ee = worksheet.Cells[i, 1].Text;
+
+                            string nombreCompleto = worksheet.Cells[i, 2].Text;
+                            string[] partes = SepararNombre(nombreCompleto);
+
+                            string apellido = partes[0];
+                            string nombre = partes.Length >= 2 ? partes[1] : "";
+
+                            string rgH = worksheet.Cells[i, 3].Text;
+                            string otH = worksheet.Cells[i, 4].Text;
+                            string dH = worksheet.Cells[i, 5].Text;
+
+                            rgTarifa *= decimal.Parse(rgH);
+                            otTarifa *= decimal.Parse(otH);
+                            dtTarifa *= decimal.Parse(dH);
+
+                            dt.Rows.Add(row);
+                            //ponemos los datos en el DGV
+                            dgvInformacion.Rows.Add(ee, nombre, apellido, rgH, otH, dH, rgTarifa.ToString(), otTarifa.ToString(), dtTarifa.ToString());
+                        }
+                        //volvemos a darle el valor que tiene la tarifa
+                        rgTarifa = decimal.Parse(datos.Campo1);
+                        otTarifa = decimal.Parse(datos.Campo2);
+                        dtTarifa = decimal.Parse(datos.Campo3);
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ingresa los valores de las Tarifas", "SISTEMA", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    FRMtarifa fRMtarifa = new FRMtarifa();
+                    fRMtarifa.Show();
+                }                
             }
         }
 

@@ -43,7 +43,12 @@ namespace Nomina
             String ruta = Path.Combine(Application.StartupPath, "ValoresTarifa.json");
             File.WriteAllText(ruta, json);
 
-            MessageBox.Show("Guardado");
+            MessageBox.Show("Tarifas Guardadas", "SISTEMA", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            Form1 form1 = new Form1();
+            form1.Refresh();
+
+            this.Close();
         }
 
         private void BTNcancelar_Click(object sender, EventArgs e)
