@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -54,7 +55,7 @@ namespace Nomina
 
         private void CargarExcel(string path)
         {
-            ExcelPackage.License.SetNonCommercialPersonal("Jose Luis Mota Espeleta");
+            ExcelPackage.License.SetNonCommercialPersonal("Jose Franscisco Garcia Lopez");
 
             using (var package = new ExcelPackage(new System.IO.FileInfo(path)))
             {
@@ -126,19 +127,19 @@ namespace Nomina
                     MessageBox.Show("Ingresa los valores de las Tarifas", "SISTEMA", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     FRMtarifa fRMtarifa = new FRMtarifa();
                     fRMtarifa.Show();
-                }                
+                }
             }
         }
 
-        private string [] SepararNombre(string nombreCompleto)
-        { 
-            
+        private string[] SepararNombre(string nombreCompleto)
+        {
+
             string[] partes = nombreCompleto.Split(',');
             if (partes.Length >= 2)
             {
                 string apellido = partes[0];
-                string nombre = partes[1]; 
-                partes[1] = nombre.Trim();               
+                string nombre = partes[1];
+                partes[1] = nombre.Trim();
             }
             return partes;
         }
@@ -147,6 +148,12 @@ namespace Nomina
         {
             FRMtarifa fRMtarifa = new FRMtarifa();
             fRMtarifa.Show();
+        }
+
+        private void recargarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string archivo = ofdExcel.FileName;
+            CargarExcel(archivo);
         }
     }
 }

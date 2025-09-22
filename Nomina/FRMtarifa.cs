@@ -45,9 +45,6 @@ namespace Nomina
 
             MessageBox.Show("Tarifas Guardadas", "SISTEMA", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            Form1 form1 = new Form1();
-            form1.Refresh();
-
             this.Close();
         }
 
